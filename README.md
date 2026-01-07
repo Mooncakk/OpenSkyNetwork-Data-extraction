@@ -1,7 +1,7 @@
 # OpenSkyNetwork-Data-extraction
 Extrait, et charges des données de vols via l'api d'OpenSkyNetwork sur une base de donnée DuckDB
 
-![img.png](img.png)
+![img_1.png](img_1.png)
 
 ### Mise en place environnement
 
