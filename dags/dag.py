@@ -92,12 +92,12 @@ def format_datetime(input_datetime):
     return input_datetime.strftime('%Y%m%d')
 
 @task(multiple_outputs=True)
-def run_parameters(api, dag_run=None):
+def run_parameters(api_name, dag_run=None):
 
     data_interval_start = format_datetime(dag_run.data_interval_start)
     data_interval_end = format_datetime(dag_run.data_interval_end)
 
-    out = api
+    out = api_name
     out['data_file_name'] = out['data_file_name'].format(data_interval_start=data_interval_start,
                                                          data_interval_end=data_interval_end)
 
