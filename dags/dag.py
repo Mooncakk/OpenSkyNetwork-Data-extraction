@@ -10,9 +10,7 @@ from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 import duckdb
 
 
-with open('dags/token.json', 'r') as file:
-    token = json.load(file)['token']
-HEADERS = {"Authorization": f"Bearer {token}"}
+HEADERS = {"Authorization": f"Bearer {get_token()}"}
 DATA_FILE_NAME = 'dags/data/data.json'
 liste_des_apis = [
      {
@@ -68,6 +66,19 @@ liste_des_apis = [
     }
 ]
 
+def get_token():
+
+    with open('dags/credentials.json', 'r') as file:
+        credentials = json.load(file)
+    url = "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token"
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": credentials['clientId'],
+        "client_secret": credentials['clientSecret'],
+    }
+    r = requests.post(url, data=data, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    res = r.json()
+    return res['access_token']
 
 def states_to_dict(states_list, colonnes, timestamp):
 
